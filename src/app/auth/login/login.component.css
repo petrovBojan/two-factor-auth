@@ -1,0 +1,270 @@
+.auth-holder {
+  width: 100%;
+  height: 100vh;
+  background: url(../../../assets/images/background.jpg) no-repeat center;
+  flex-direction: column;
+  background-size: cover;
+}
+.holder {
+  background-color: rgba(255,255,255,.8);
+  max-height: 100vh;
+  overflow: auto;
+}
+h1 {
+  text-align: center;
+  color: #FFFFFF;
+  font-weight: 300;
+}
+.logo {
+  text-align: center;
+  height: 100px;
+  overflow: hidden;
+}
+.logo img{
+  width:100%;
+  height: 100%;
+  object-fit: contain;
+}
+.card {
+  height: auto;
+  margin:auto;
+  width: 100%;
+  max-width:440px;
+  border:0 none;background:none;
+}
+.card-footer {
+  background-color: transparent;
+}
+.separator {
+  border-top: 1px solid #ababab;
+  margin: .8rem auto;
+}
+.error {
+  background: rgba(248,49,49,.64);
+  padding: 7px;
+  border-radius: 3px;
+  color: #fff;
+  margin-top: 13px;
+  font-size: .9rem;
+}
+@media only screen and (max-width: 400px) {
+  .logo {
+    margin-bottom: 1rem;
+    padding: 0 20px;
+  }
+}
+@media only screen and (min-width: 768px) {
+
+}
+@media only screen and (min-width: 768px) and (max-width:1024px){
+
+}
+
+.fs-14 {
+  font-size: .8rem;
+}
+.white {
+  color: white;
+}
+.link {
+  cursor: pointer;
+  color: #70abf8;
+}
+.link:hover {
+  cursor: pointer;
+  color: #9cc5fc;
+}
+
+.error-msg {
+  background: rgba(248,49,49,.64);
+  padding: 7px;
+  border-radius: 3px;
+  color: #fff;
+  margin-top: 13px;
+  font-size: .9rem;
+}
+
+.error {
+  padding-left: 15px;
+  color: #db4b4b;
+  font-size: .85rem;
+}
+
+.card-body {
+  padding-bottom: unset;
+}
+.input-group {
+    background-color: #4B4A4A;
+    border-radius: 10px;
+    border: solid 1px #4caf50;
+    padding:5px;
+    height: 50px;
+    min-width: 220px;
+    /* width: 300px; */
+  }
+  /* .input-group input{
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+  } */
+  .input-icons {
+    width: 25px;
+    height: 25px;
+    margin: auto;
+    text-align: center;
+    color: #4caf50;
+  }
+ .input-group input {
+background-color: blue;
+}
+  .input-group-text,
+.form-signin .form-control {
+  border: 0 none;
+  background-color: #4B4A4A;
+  color: #acacac;
+  /* height: 50px; */
+}
+.passToggler {
+    background: #4B4A4A;
+    border: 0 none;
+  }
+    .passToggler:focus{outline:none;}
+    .passToggler .mat-icon {
+      color: #4caf50;
+    }
+
+:host /deep/ .mat-checkbox-frame {
+    border-color: #4caf50
+}
+.form-signin .form-control:focus{
+    box-shadow:none;
+}
+.remember {
+    color: #4caf50;
+    vertical-align: top;
+}
+
+:ng-deep .checkboxx mat-checkbox .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: #4caf50 !important;
+}
+.btn {
+  padding: 4px 6px;
+}
+.btn-custom {
+    color: #fff;
+    background-color: #4caf50;
+    border-color: #4caf50;
+    height: 38px;
+    padding-left: 2px;
+
+}
+.btn-custom .mat-icon{
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 10px;
+  margin-right: 6px;
+  vertical-align: sub !important;
+}
+  .card-footer {
+    background-color: transparent;
+    border-top: 0 none;
+  }
+  h1 {
+    font-size: 1rem;
+  }
+  .welcome {
+    font-size: 1rem;
+    font-weight: 600;
+    color: antiquewhite;
+  }
+  .header {
+    color: #fdfdfd;
+    font-weight: 500;
+    font-size: 1.4rem;
+  }
+
+  .form-signin {
+    max-width: 400px;
+    margin: auto;
+  }
+  textarea:focus,
+  input:focus{
+    border-color: none !important;
+    outline: 0 none !important;
+  }
+
+  .fs-14 {
+    font-size: .8rem;
+  }
+
+  .link {
+    cursor: pointer;
+    color: #70abf8;
+  }
+  .link:hover {
+    cursor: pointer;
+    color: #9cc5fc;
+  }
+
+  .error-msg {
+    background: rgba(248,49,49,.64);
+    padding: 7px;
+    border-radius: 3px;
+    color: #fff;
+    margin-top: 13px;
+    font-size: .9rem;
+  }
+
+  .error {
+    padding-left: 15px;
+    color: #db4b4b;
+    font-size: .85rem;
+  }
+
+  textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+input[type="button"]:focus,
+.uneditable-input:focus {
+  border-color: transparent !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
+  background-color: #4B4A4A !important;
+}
+input:-internal-autofill-selected {
+    background-color: #4B4A4A !important;
+    color: #fff !important;
+  }
+
+  input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active
+
+ {
+  border: 0 none;
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0px 1000px #4B4A4A inset;
+  transition: background-color 5000s ease-in-out 0s;
+  color: #fff;
+  background-color: #4B4A4A;
+}
+
+::ng-deep .mat-select-placeholder {
+  color: #acacac !important;
+}
+
+::ng-deep .input-group .mat-select-value-text {
+  color: #fff;
+}

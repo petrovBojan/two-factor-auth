@@ -1,0 +1,57 @@
+<div class="d-flex justify-content-center auth-holder">
+  <div class="card">
+    <mat-card class="holder">
+      <div>
+        <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="login(loginForm)" autocomplete="off">
+          <div class="form-group mb-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                  <mat-icon class="input-icons" >email</mat-icon>
+              </div>
+              <input type="email"
+                    formControlName="email"
+                    class="form-control"
+                    placeholder="E-mail"
+                    autofocus autocomplete="off"
+              />
+            </div>
+            <!-- <mat-error *ngIf="f.email.invalid && f.email.touched" class="ml-1 error">
+              {{ getError('email') }}
+            </mat-error> -->
+          </div>
+          <div class="form-group mb-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                  <mat-icon class="input-icons" >vpn_key</mat-icon>
+              </div>
+              <input [type]="hide ? 'password' : 'text'"
+                    formControlName="password"
+                    class="form-control"
+                    placeholder="Password"
+                    autocomplete="off" />
+                <div class="input-group-append">
+                  <button class="passToggler mt-1" type="button" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                </div>
+            </div>
+            <!-- <mat-error *ngIf="f.password.invalid && f.password.touched" class="ml-1 error">
+              {{ getError('password') }}
+            </mat-error> -->
+          </div>
+          <div class="d-flex h-100 justify-content-between ">
+            <!-- <div class="mt-2 checkboxx">
+              <mat-checkbox class="mr-2"></mat-checkbox>
+              <span class="remember fs-14" >Remember password</span>
+            </div> -->
+            <button type="submit" value="Login"
+              [class.disabled]="" class="btn float-right btn-custom">
+              <mat-icon>login</mat-icon>Login
+            </button>
+          </div>
+        </form>
+      </div>
+    </mat-card>
+  </div>
+</div>
+

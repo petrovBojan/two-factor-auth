@@ -1,0 +1,52 @@
+.auth-holder {
+  width: 100%;
+  height: 100vh;
+  background: url(../../assets/images/background.jpg) no-repeat center;
+  flex-direction: column;
+  background-size: cover;
+}
+.holder {
+  background-color: rgba(255,255,255,.8);
+  max-height: 100vh;
+  overflow: auto;
+}
+
+.logo {
+  text-align: center;
+  height: 100px;
+}
+
+.card {
+  height: auto;
+  margin:auto;
+  width: 100%;
+  max-width:440px;
+  border:0 none;background:none;
+}
+.card-footer {
+  background-color: transparent;
+}
+.separator {
+  border-top: 1px solid #ababab;
+  margin: .8rem auto;
+}
+.error {
+  background: rgba(248,49,49,.64);
+  padding: 7px;
+  border-radius: 3px;
+  color: #fff;
+  margin-top: 13px;
+  font-size: .9rem;
+}
+@media only screen and (max-width: 400px) {
+  .logo {
+    margin-bottom: 1rem;
+    padding: 0 20px;
+  }
+}
+@media only screen and (min-width: 768px) {
+
+}
+@media only screen and (min-width: 768px) and (max-width:1024px){
+
+}

@@ -1,0 +1,99 @@
+<div class="d-flex justify-content-center auth-holder">
+  <div class="card">
+    <mat-card class="holder">
+      <div>
+        <form class="form-signin" [formGroup]="registerForm" (ngSubmit)="login(registerForm)" autocomplete="off">
+          <div class="form-group mb-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                  <mat-icon class="input-icons" >email</mat-icon>
+              </div>
+              <input type="email"
+                    formControlName="email"
+                    class="form-control"
+                    placeholder="E-mail"
+                    autofocus autocomplete="off"
+              />
+            </div>
+            <!-- <mat-error *ngIf="f.email.invalid && f.email.touched" class="ml-1 error">
+              {{ getError('email') }}
+            </mat-error> -->
+          </div>
+          <div class="form-group mb-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                  <mat-icon class="input-icons" >vpn_key</mat-icon>
+              </div>
+              <input [type]="hide ? 'password' : 'text'"
+                    formControlName="password"
+                    class="form-control"
+                    placeholder="Password"
+                    autocomplete="off" />
+                <div class="input-group-append">
+                  <button class="passToggler mt-1" type="button" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                </div>
+            </div>
+            <!-- <mat-error *ngIf="f.password.invalid && f.password.touched" class="ml-1 error">
+              {{ getError('password') }}
+            </mat-error> -->
+          </div>
+
+          <div class="text-center">
+            <div class="img-holder mb-3 border-0 text-center" [style.backgroundColor]="'transparent'">
+                <img #logoImg [src]='logoPath' alt="" />
+            </div>
+            <div class="form-group text-center">
+                <div class="btn-group mr-2">
+                    <button class="upload-image-button" mat-raised-button (click)='onUploadLogoClick()'
+                        type="button">
+                        <mat-icon>image</mat-icon>
+                        Upload Logo
+                    </button>
+                    <span class="btn">{{logoName}}</span>
+                </div>
+                <input #logoInput type="file" style="display: none;" accept='image/*' class="form-control-file"
+                    (change)='onLogoSelect($event)'>
+            </div>
+            <div>
+                <mat-hint class="small">
+                    Supported file types: .jpg, .png, .jpeg, .jfif | Max image size: 5 MB
+                </mat-hint>
+                <mat-error class="error-size mt-2" *ngIf='logoErrorMessage.length > 0'>
+                    {{logoErrorMessage}}
+                </mat-error>
+            </div>
+  
+            <div class="alert alert-info mt-2">Note: Preferred logo resolution is 300x300px</div>
+        </div>
+
+        <div class="viewport" #viewportEl>
+          <canvas #myCanvas class="myCanvas"  (mousedown)="onMouseDown($event)">
+
+            
+          </canvas>
+          <canvas #offsetCanvas class="offsetCanvas" ></canvas>
+        </div>
+
+
+          <div class="d-flex h-100 justify-content-end ">
+            <!-- <div class="mt-2 checkboxx">
+              <mat-checkbox class="mr-2"></mat-checkbox>
+              <span class="remember fs-14" >Remember password</span>
+            </div> -->
+            <button type="submit" value="Login"
+              [class.disabled]="" class="btn float-right btn-custom">
+              <mat-icon>login</mat-icon>Register
+            </button>
+          </div>
+        </form>
+
+        
+
+
+      </div>
+    </mat-card>
+  </div>
+</div>
+
