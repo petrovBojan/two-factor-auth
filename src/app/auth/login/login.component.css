@@ -255,7 +255,7 @@ input:-webkit-autofill:active
  {
   border: 0 none;
   -webkit-text-fill-color: #fff;
-  -webkit-box-shadow: 0 0 0px 1000px #4B4A4A inset;
+  box-shadow: 0 0 0px 1000px #4B4A4A inset;
   transition: background-color 5000s ease-in-out 0s;
   color: #fff;
   background-color: #4B4A4A;

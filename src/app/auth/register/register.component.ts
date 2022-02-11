@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ImageUtils } from 'src/app/shared/utils/image.utils';
+import { WorldMap } from './world-map';
 
 @Component({
   selector: 'app-register',
@@ -32,13 +34,20 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     y: 0
   }
 
+  worldCoords = {
+    width: 400,
+    height: 200
+  }
+
+  room;
+  
   mouseHold = false;
   @ViewChild('myCanvas') myCanvas: ElementRef;
   @ViewChild('offsetCanvas') offsetCanvas: ElementRef;
   @ViewChild('viewportEl') viewportEl: ElementRef;
   context: CanvasRenderingContext2D;
 
-  constructor(/* private authSrv: AuthService, */  private router: Router, private dialog: MatDialog, private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(/* private authSrv: AuthService, */  @Inject(DOCUMENT) private document,  private router: Router, private dialog: MatDialog, private route: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit() {
 
@@ -51,6 +60,24 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.context = this.myCanvas.nativeElement.getContext('2d');
+  }
+
+  createRoom() {
+    this.room = {
+      width: this.getRoomProps().width,
+      height: this.getRoomProps().height,
+      map: new WorldMap(this.getRoomProps().width,this.getRoomProps().height, this.document)
+    }
+  }
+  getRoomProps() {
+    let cw = this.offsetCanvas.nativeElement.width;
+    let ch = this.offsetCanvas.nativeElement.height;
+    const wW = this.worldCoords.width;
+    const wH = this.worldCoords.height;
+    return {
+      width: cw/ch > wW / wH ? cw : ch * (wW/wH),
+      height: cw/ch > wW / wH ? cw * (wH/wW) : ch
+    }
   }
 
   onMouseDown(event) {
