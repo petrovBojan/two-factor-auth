@@ -1,0 +1,30 @@
+<div class="d-flex justify-content-center auth-holder">
+  <div class="card">
+    <mat-card class="holder">
+      <div class="form-signin" >
+        <div class="viewport" >
+          <div class="text-center">
+            <div class="img-holder mb-3 border-0 text-center" [style.backgroundColor]="'transparent'">
+                <img #logoImg [src]='bgUrl' alt="" />
+            </div>
+        </div>
+          <canvas #myCanvas class="myCanvas"  (mousedown)="onMouseDown($event)">
+          </canvas>
+          <canvas #offsetCanvas class="offsetCanvas" ></canvas>
+        </div>
+
+        <div class="d-flex h-100 justify-content-between ">
+          <button (click)="goBack()"
+            [class.disabled]="" class="btn float-right">
+              Back
+          </button>
+          <button type="submit" value="Login"
+            [class.disabled]="" class="btn float-right btn-custom">
+            <mat-icon>login</mat-icon>Login
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+

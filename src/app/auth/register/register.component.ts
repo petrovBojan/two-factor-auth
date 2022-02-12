@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { EventModel } from 'src/app/shared/utils/event.model';
 import { ImageUtils } from 'src/app/shared/utils/image.utils';
 import { WorldMap } from './world-map';
 
@@ -123,19 +124,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   login(form:FormGroup) {
-    /* if(form.valid){
-      this.authSrv.setLoader(true);
-      this.authSrv.login(form).subscribe(data => {
-        this.authSrv.setLoader(false);
-        if (data ) {
-          // login successful - redirect to return url
-          this.router.navigate(['/home']);
-        }
-        else {
-          this.authSrv.setLoader(false);
-        }
-      })
-    } */
+    if(form.valid){
+      const formData = EventModel.mapFormGroupToFormData(this.registerForm);
+      EventModel.appendIndependentPropsToFormData(formData, this.logo);
+debugger;
+      console.log(formData);
+    }
 
     
     this.router.navigate(['/login']);

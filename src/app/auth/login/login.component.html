@@ -39,7 +39,7 @@
               {{ getError('password') }}
             </mat-error> -->
           </div>
-          <div class="viewport" >
+          <!-- <div class="viewport" >
 
             <div class="text-center">
               <div class="img-holder mb-3 border-0 text-center" [style.backgroundColor]="'transparent'">
@@ -49,12 +49,16 @@
             <canvas #myCanvas class="myCanvas"  (mousedown)="onMouseDown($event)">
             </canvas>
             <canvas #offsetCanvas class="offsetCanvas" ></canvas>
-          </div>
+          </div> -->
 
           <div class="d-flex h-100 justify-content-between ">
+            <button (click)="goBack()"
+            [class.disabled]="" class="btn float-right">
+              Back
+            </button>
             <button type="submit" value="Login"
               [class.disabled]="" class="btn float-right btn-custom">
-              <mat-icon>login</mat-icon>Login
+                Next
             </button>
           </div>
         </form>

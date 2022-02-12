@@ -1,24 +1,18 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription, Subject } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-verify',
+  templateUrl: './verify.component.html',
+  styleUrls: ['./verify.component.css']
 })
-export class LoginComponent implements OnInit {
-
-  model: any = {};
-  hide = true;
+export class VerifyComponent implements OnInit {
 
   subscription = new Subscription();
-  isEmailValid = true;
-  loginForm: FormGroup;
-  imgUrl = '';
 
   public logoErrorMessage: string = '';
   public logo: File = null;
@@ -54,33 +48,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-    this.imgUrl='../assets/images/biofarmtrans.png';
-    //this.errMsg = this.authSrv.getErrorMsg();
-    // get return url from route parameters or defau lt to  '/'
-
-    this.createForm();
   }
 
-
-  createForm() {
-    this.loginForm = this.fb.group({
-      'email': ['', [Validators.required]],
-      'password': ['', [Validators.required]],
-    });
-  }
-  get f() { return this.loginForm.controls; }
-
-  /* getError(control: any) {
-    switch (control) {
-      case 'email':
-          return this.loginForm.get('email').hasError('pattern') ? 'enter valid email' :
-            this.loginForm.get('email').hasError('required') ? 'enter a email' : '';
-      case 'password':
-        return this.loginForm.get('password').hasError('required') ? 'enter a password' : '';
-
-    }
-  } */
-  login(form:FormGroup) {
+  login() {
     /* if(form.valid){
       this.authSrv.setLoader(true);
       this.authSrv.login(form).subscribe(data => {
@@ -95,7 +65,7 @@ export class LoginComponent implements OnInit {
       })
     } */
 
-    this.router.navigate(['/register']);
+    this.router.navigate(['/home']);
 
   }
 
@@ -107,8 +77,10 @@ export class LoginComponent implements OnInit {
     console.log('-----------');
   }
 
+
   goBack() {
     this.location.back();
   }
+
 
 }
