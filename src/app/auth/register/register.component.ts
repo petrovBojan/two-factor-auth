@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -38,20 +38,24 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     width: 400,
     height: 200
   }
-
+  bgUrl = '../../../assets/images/background.jpg';
   room;
-  
+  canvasSize = {
+    width: (400) * devicePixelRatio,
+    height: (200) * devicePixelRatio
+  }
   mouseHold = false;
   @ViewChild('myCanvas') myCanvas: ElementRef;
   @ViewChild('offsetCanvas') offsetCanvas: ElementRef;
   @ViewChild('viewportEl') viewportEl: ElementRef;
   context: CanvasRenderingContext2D;
+  offsetContext: CanvasRenderingContext2D;
 
-  constructor(/* private authSrv: AuthService, */  @Inject(DOCUMENT) private document,  private router: Router, private dialog: MatDialog, private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(/* private authSrv: AuthService, */private renderer: Renderer2,  @Inject(DOCUMENT) private document,  private router: Router, private dialog: MatDialog, private route: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit() {
 
-    this.imgUrl='../assets/images/biofarmtrans.png';
+    this.imgUrl='../../../assets/images/background.png';
     //this.errMsg = this.authSrv.getErrorMsg();
     // get return url from route parameters or defau lt to  '/'
 
@@ -59,30 +63,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.context = this.myCanvas.nativeElement.getContext('2d');
-  }
 
-  createRoom() {
-    this.room = {
-      width: this.getRoomProps().width,
-      height: this.getRoomProps().height,
-      map: new WorldMap(this.getRoomProps().width,this.getRoomProps().height, this.document)
-    }
-  }
-  getRoomProps() {
-    let cw = this.offsetCanvas.nativeElement.width;
-    let ch = this.offsetCanvas.nativeElement.height;
-    const wW = this.worldCoords.width;
-    const wH = this.worldCoords.height;
-    return {
-      width: cw/ch > wW / wH ? cw : ch * (wW/wH),
-      height: cw/ch > wW / wH ? cw * (wH/wW) : ch
-    }
-  }
-
-  onMouseDown(event) {
-    event;
-    debugger;
   }
 
   createForm() {
@@ -107,7 +88,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   onUploadLogoClick(): void {
     this.logoInput.nativeElement.click();
   }
-
+ 
   onLogoSelect(event): void {
     this.logoErrorMessage = '';
     const files = event.target.files;
@@ -134,6 +115,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     ImageUtils.displayUploadedImage(file, this.logoImg);
   }
   
+  onMouseDown(event) {
+    event;
+    console.log(event.layerX);
+    console.log(event.layerY);
+    console.log('-----------');
+  }
+
   login(form:FormGroup) {
     /* if(form.valid){
       this.authSrv.setLoader(true);

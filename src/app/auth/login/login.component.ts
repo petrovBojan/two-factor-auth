@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,6 +18,36 @@ export class LoginComponent implements OnInit {
   isEmailValid = true;
   loginForm: FormGroup;
   imgUrl = '';
+
+  public logoErrorMessage: string = '';
+  public logo: File = null;
+  public logoName: string = '';
+  public logoPath: string = '';
+  @ViewChild('logoImg') logoImg: ElementRef;
+  @ViewChild('logoInput') logoInput;
+
+  mouseCoords = {
+    x: 0,
+    y: 0
+  }
+
+  worldCoords = {
+    width: 400,
+    height: 200
+  }
+  bgUrl = '../../../assets/images/pixel.png';
+  room;
+  canvasSize = {
+    width: (400) * devicePixelRatio,
+    height: (200) * devicePixelRatio
+  }
+  mouseHold = false;
+  @ViewChild('myCanvas') myCanvas: ElementRef;
+  @ViewChild('offsetCanvas') offsetCanvas: ElementRef;
+  @ViewChild('viewportEl') viewportEl: ElementRef;
+  context: CanvasRenderingContext2D;
+  offsetContext: CanvasRenderingContext2D;
+  
 
   constructor(/* private authSrv: AuthService, */  private router: Router, private dialog: MatDialog, private route: ActivatedRoute, private fb: FormBuilder) { }
 
@@ -68,12 +98,12 @@ export class LoginComponent implements OnInit {
 
   }
 
-  /* openDialog(message): void {
-    setTimeout(() => this.dialog.open(NotificationPopupComponent, {
-      width: '400px',
-      data: message,
-      panelClass: 'modalbox-purple'
-    }));
-  } */
+  onMouseDown(event) {
+    event;
+    debugger;
+    console.log(event.layerX);
+    console.log(event.layerY);
+    console.log('-----------');
+  }
 
 }

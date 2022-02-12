@@ -268,3 +268,83 @@ input:-webkit-autofill:active
 ::ng-deep .input-group .mat-select-value-text {
   color: #fff;
 }
+
+
+
+.img-holder{
+  height: 200px;
+  vertical-align: middle;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+}
+
+.img-holder img{
+  max-width: 100%;
+  max-height: 180px;
+}
+.upload-image-button {
+  outline: none;
+  background-color: #ffffff;
+}
+.btn-group{
+  display: block!important;
+}
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.label-txt{
+  font-size: 1.1rem; color:rgba(0,0,0,1);
+}
+.error {line-height: 16px;  }
+
+
+
+
+:host {
+  /* width: 100%; */
+  display: flex;
+  height: 100%;
+  /* max-height: calc(100vh - 50px); */
+  /* overflow:hidden;
+  display: block; */
+}
+.viewport {
+  position: relative;
+  width: 100%;
+  height: 200px;
+}
+canvas {
+  width: 100%;
+  height: 100%;
+  transition: opacity 1s;
+  background-color: transparent;
+}
+canvas {
+  position: relative;
+  /* left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 0; */
+}
+.myCanvas{
+  z-index: 2;
+
+}
+.offsetCanvas {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+}
