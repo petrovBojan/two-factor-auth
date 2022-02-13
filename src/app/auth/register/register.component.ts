@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventModel } from 'src/app/shared/utils/event.model';
 import { ImageUtils } from 'src/app/shared/utils/image.utils';
 import { WorldMap } from './world-map';
@@ -52,7 +53,16 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   context: CanvasRenderingContext2D;
   offsetContext: CanvasRenderingContext2D;
 
-  constructor(/* private authSrv: AuthService, */private renderer: Renderer2,  @Inject(DOCUMENT) private document,  private router: Router, private dialog: MatDialog, private route: ActivatedRoute, private fb: FormBuilder) { }
+
+  userId = 1;
+  constructor(
+    private authSrv: AuthService,
+    private renderer: Renderer2, 
+     @Inject(DOCUMENT) private document,  
+     private router: Router, 
+     private dialog: MatDialog, 
+     private route: ActivatedRoute, 
+     private fb: FormBuilder) { }
 
   ngOnInit() {
 
@@ -69,7 +79,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   createForm() {
     this.registerForm = this.fb.group({
-      'email': ['', [Validators.required]],
+      'name': ['', [Validators.required]],
+      'email': ['', [Validators.required, Validators.email]],
       'password': ['', [Validators.required]],
     });
   }
@@ -125,15 +136,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   login(form:FormGroup) {
     if(form.valid){
-      const formData = EventModel.mapFormGroupToFormData(this.registerForm);
-      EventModel.appendIndependentPropsToFormData(formData, this.logo);
-debugger;
-      console.log(formData);
-    }
-
-    
-    this.router.navigate(['/login']);
-
+      this.subscription.add(this.authSrv.insertUser(form.value).subscribe((data: any) => {
+          data;
+          let params = {
+            userId: data.id
+          }
+          this.router.navigate(['/upload'], {queryParams : params});
+      })
+    );
   }
-
+  }
 }

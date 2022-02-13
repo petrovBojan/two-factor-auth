@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { Location } from '@angular/common';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit {
   offsetContext: CanvasRenderingContext2D;
   
 
-  constructor(/* private authSrv: AuthService, */private location: Location,  private router: Router, private dialog: MatDialog, private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private authSrv: AuthService,private location: Location,  private router: Router, private dialog: MatDialog, private route: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit() {
 
@@ -81,34 +82,23 @@ export class LoginComponent implements OnInit {
     }
   } */
   login(form:FormGroup) {
-    /* if(form.valid){
-      this.authSrv.setLoader(true);
-      this.authSrv.login(form).subscribe(data => {
-        this.authSrv.setLoader(false);
-        if (data ) {
-          // login successful - redirect to return url
-          this.router.navigate(['/home']);
-        }
-        else {
-          this.authSrv.setLoader(false);
-        }
+    if(form.valid){
+      this.subscription.add(this.authSrv.getUser(form.value).subscribe((data: any) => {
+          data;
+          if (data) {
+            let params = {
+              userId: data.userList.id
+            }
+            debugger;
+            this.router.navigate(['/verify'], {queryParams : params});
+          }
       })
-    } */
-
-    this.router.navigate(['/register']);
-
+    );
   }
-
-  onMouseDown(event) {
-    event;
-    debugger;
-    console.log(event.layerX);
-    console.log(event.layerY);
-    console.log('-----------');
   }
 
   goBack() {
-    this.location.back();
+    this.router.navigate(['/register']);
   }
 
 }

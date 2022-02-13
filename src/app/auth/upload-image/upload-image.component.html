@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center auth-holder">
+  <div class="card">
+    <mat-card class="holder">
+      <div class="form-signin" >
+
+        <div class="btn-group mr-2">
+          <button class="upload-image-button" mat-raised-button (click)='onUploadLogoClick()'
+              type="button">
+              <mat-icon>image</mat-icon>
+              Upload Image
+          </button>
+          <span class="btn">{{logoName}}</span>
+
+          <div>
+            <mat-hint class="small">
+                Supported file types: .jpg, .png, .jpeg, .jfif | Max image size: 5 MB
+            </mat-hint>
+            <mat-error class="error-size mt-2" *ngIf='logoErrorMessage.length > 0'>
+                {{logoErrorMessage}}
+            </mat-error>
+        </div>
+      </div>
+        
+        <div class="viewport" >
+          <div class="text-center">
+            <div class="img-holder mb-3 border-0 text-center" [style.backgroundColor]="'transparent'">
+                <img #logoImg [src]='logoPath' alt="" />
+            </div>
+            <div class="form-group text-center">
+                
+                <input #logoInput type="file" style="display: none;" accept='image/*' class="form-control-file"
+                    (change)='onLogoSelect($event)'>
+            </div>
+        </div>
+
+          <canvas #myCanvas class="myCanvas"  (mousedown)="onMouseDown($event)">
+          </canvas>
+          <canvas #offsetCanvas class="offsetCanvas" ></canvas>
+        </div>
+
+        <div class="d-flex h-100 justify-content-between ">
+          <button (click)="goBack()"
+            [class.disabled]="" class="btn float-right">
+              Back
+          </button>
+          <button (click)="register()"  class="btn float-right btn-custom">
+            <mat-icon>login</mat-icon>Login
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
+

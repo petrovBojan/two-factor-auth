@@ -248,31 +248,113 @@ export class AuthService {
   }
 
 
-  registerWith(formData: FormData): Observable<any> {
-    const endpoint = `${this.baseUrl}/admin/create`;
-    return this.http.post<any>(endpoint, formData);
+  uploadImage(formData: FormData, userId): Observable<any> {
+    const endpoint = `${this.baseUrl}/uploadPic/`;
+    const queryParams = new HttpParams()
+      .set('userID', encodeURIComponent(userId));
+
+    return this.http.post<any>(endpoint, formData, { params: queryParams });
   }
 
+/*   getTopicsForAutocomplete(topicValue: string): Observable<string[]> {
+    const queryParams = new HttpParams()
+      .set('topicValue', encodeURIComponent(topicValue));
+    const endpoint = `${this.baseUrl}/admin/${this.getVendorID()}/topics/autocomplete`;
+    return this.http.get<string[]>(endpoint, { params: queryParams });
+  } */
 
-  getMethod(id) {
-    return this.http.get(`${this.baseUrl}/getmethod/name/${id}`, {
+
+ /*  getMethod() {
+    return this.http.get(`${this.baseUrl}/InsertUser`, {
+      name: 'bojan',
+      email: 'taj@toj.com',
+      password: '1234'
+      
     }).pipe(
       tap((data: any) => {
         return data;
       })
     );
+  } */
+
+  insertUser2() {
+    return this.http.get(`${this.baseUrl}/InsertUser`, {
+      params: {
+        name: 'bojan',
+        email: 'taj@toj.com',
+        password: '1234'
+      }
+    }).pipe(
+      tap((data: any) =>{
+        data;
+        })
+    );
   }
 
+  insertUser(form): Observable<any> {
+    const endpoint = `${this.baseUrl}/InsertUser`;
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json');
+    const body = JSON.stringify({
+            name: form.name,
+            email: form.email,
+            password: form.password
+    });
+    const options = { headers: headers };
+    return this.http.post<any>(endpoint, body, options);
 
-  postMethod(form, other){
-    return this.http.post(`${this.baseUrl}/getmethod/name`, {
-      name: form.name,
-      hosts: form.hosts,
-      other
+  }
+
+  savePoints(points, userId, imageID): Observable<any> {
+    const endpoint = `${this.baseUrl}/saveCoordinates`;
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json');
+    const body = JSON.stringify({
+      points,
+      userId,
+      imageID
+    });
+    const options = { headers: headers };
+    return this.http.post<any>(endpoint, body, options);
+
+  }
+
+  getUser(form): Observable<any> {
+    const endpoint = `${this.baseUrl}/GetUserByID`;
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json');
+    const body = JSON.stringify({
+            email: form.email,
+            password: form.password
+    });
+    const options = { headers: headers };
+    return this.http.post<any>(endpoint, body, options);
+
+  }
+  getUserImage(userID) {
+    return this.http.get(`${this.baseUrl}/getUserPicture`, {
+      params: {
+        userID
+      }
     }).pipe(
-      tap((data: any) => {
-        return data;
-      })
+      tap((data: any) =>{
+        data;
+        })
     );
+  }
+  
+
+  loginFinally(points, userId, imageID): Observable<any> {
+    const endpoint = `${this.baseUrl}/Auth`;
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json');
+    const body = JSON.stringify({
+      points,
+      userId,
+      imageID
+    });
+    const options = { headers: headers };
+    return this.http.post<any>(endpoint, body, options);
+
   }
 }

@@ -6,6 +6,19 @@
           <div class="form-group mb-2">
             <div class="input-group">
               <div class="input-group-prepend">
+                  <mat-icon class="input-icons" >person</mat-icon>
+              </div>
+              <input type="text"
+                    formControlName="name"
+                    class="form-control"
+                    placeholder="Name"
+                    autofocus autocomplete="off"
+              />
+            </div>
+          </div>
+            <div class="form-group mb-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
                   <mat-icon class="input-icons" >email</mat-icon>
               </div>
               <input type="email"
@@ -41,7 +54,7 @@
           </div>
 
           
-          <div class="btn-group mr-2">
+          <!-- <div class="btn-group mr-2">
             <button class="upload-image-button" mat-raised-button (click)='onUploadLogoClick()'
                 type="button">
                 <mat-icon>image</mat-icon>
@@ -57,8 +70,8 @@
                   {{logoErrorMessage}}
               </mat-error>
           </div>
-        </div>
-        <div class="viewport" >
+        </div> -->
+        <!-- <div class="viewport" >
 
           <div class="text-center">
             <div class="img-holder mb-3 border-0 text-center" [style.backgroundColor]="'transparent'">
@@ -76,7 +89,7 @@
             
           </canvas>
           <canvas #offsetCanvas class="offsetCanvas" ></canvas>
-        </div>
+        </div> -->
 
 
           <div class="d-flex h-100 justify-content-end ">
@@ -86,7 +99,7 @@
             </div> -->
             <button type="submit" value="Login"
               [class.disabled]="" class="btn float-right btn-custom">
-              <mat-icon>login</mat-icon>Register
+              <mat-icon>login</mat-icon>Next
             </button>
           </div>
         </form>

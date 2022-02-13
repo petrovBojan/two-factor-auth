@@ -34,6 +34,8 @@ import { RouterModule } from '@angular/router';
 import { VerifyComponent } from './auth/verify/verify.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
+import { UploadImageComponent } from './auth/upload-image/upload-image.component';
+import { SafeurlPipe } from './shared/utils/safeurl.pipe';
 
 export function jwtTokenGetter() {
   return localStorage.getItem("jwt");
@@ -45,7 +47,9 @@ export function jwtTokenGetter() {
     RegisterComponent,
     LoginComponent,
     HomeComponent,
-    VerifyComponent
+    VerifyComponent,
+    UploadImageComponent,
+    SafeurlPipe
   ],
   imports: [
     BrowserModule,
@@ -56,6 +60,7 @@ export function jwtTokenGetter() {
     CommonModule,
     RouterModule,
 
+    HttpClientModule,
     MatMenuModule,
     MatInputModule,
     MatDialogModule,
@@ -79,6 +84,9 @@ export function jwtTokenGetter() {
         tokenGetter: jwtTokenGetter
       }
     }),
+  ],
+  exports: [
+    SafeurlPipe
   ],
   providers: [HttpClientModule],
   bootstrap: [AppComponent]

@@ -4,6 +4,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { DomSanitizer } from '@angular/platform-browser';
+
+export interface Point {
+  order: number,
+  x: number,
+  y: number
+}
 
 @Component({
   selector: 'app-verify',
@@ -26,10 +34,11 @@ export class VerifyComponent implements OnInit {
     y: 0
   }
 
-  worldCoords = {
-    width: 400,
-    height: 200
-  }
+  points: Point[] = [];
+  order = 0;
+  maxPoints = false;
+
+
   bgUrl = '../../../assets/images/pixel.png';
   room;
   canvasSize = {
@@ -43,43 +52,73 @@ export class VerifyComponent implements OnInit {
   context: CanvasRenderingContext2D;
   offsetContext: CanvasRenderingContext2D;
   
+  userId;
+  imageId
+  imageUrl;
+  staticUrl = 'http://127.0.0.1:8887/'
 
-  constructor(/* private authSrv: AuthService, */private location: Location,  private router: Router, private dialog: MatDialog, private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private authSrv: AuthService, 
+    private location: Location,  
+    private router: Router, 
+    private dialog: MatDialog, 
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute, 
+    private fb: FormBuilder) { }
 
   ngOnInit() {
 
+    this.userId = this.route.snapshot.queryParams.userId;
+    debugger;
+    this.subscription.add(this.authSrv.getUserImage(this.userId).subscribe((data: any) => {
+      data;
+      this.bgUrl = data.url;
+      const splitEndTime = (this.bgUrl).split('\\');
+      let lastElement = splitEndTime.slice(-1);
+      this.imageUrl = this.staticUrl + lastElement;
+      this.imageId = data.imageID;
+      this.userId = data.userID;
+      
+  })
+);
+
+  }
+  onMouseDown(event) {
+    event;
+    if (this.order < 3) {
+      this.order = this.order +1;
+      this.points.push({
+        order: this.order,
+        x: event.layerX,
+        y: event.layerY
+  
+      });
+      console.log(event.layerX);
+    console.log(event.layerY);
+    console.log(this.order);
+    console.log('-----------');
+    } else {
+      this.maxPoints = true;
+      console.log('-----------');
+    }
+    
   }
 
   login() {
-    /* if(form.valid){
-      this.authSrv.setLoader(true);
-      this.authSrv.login(form).subscribe(data => {
-        this.authSrv.setLoader(false);
-        if (data ) {
-          // login successful - redirect to return url
-          this.router.navigate(['/home']);
+    if(this.maxPoints){
+      this.subscription.add(this.authSrv.loginFinally(this.points, this.userId, this.imageId).subscribe((data: any) => {
+        data;
+        if (data.status) {
+          this.router.navigate(['/home'],);
         }
-        else {
-          this.authSrv.setLoader(false);
-        }
-      })
-    } */
 
-    this.router.navigate(['/home']);
+    })
+  );
+    }
 
   }
-
-  onMouseDown(event) {
-    event;
-    debugger;
-    console.log(event.layerX);
-    console.log(event.layerY);
-    console.log('-----------');
-  }
-
 
   goBack() {
-    this.location.back();
+    this.router.navigate(['/login']);
   }
 
 
