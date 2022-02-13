@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { NotificationPopupComponent } from 'src/app/notification-popup/notification-popup.component';
 
 @Component({
   selector: 'app-login',
@@ -55,6 +56,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
+    localStorage.removeItem('user');
+    localStorage.removeItem('jwt');
     this.imgUrl='../assets/images/biofarmtrans.png';
     //this.errMsg = this.authSrv.getErrorMsg();
     // get return url from route parameters or defau lt to  '/'
@@ -65,22 +68,22 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.loginForm = this.fb.group({
-      'email': ['', [Validators.required]],
+      'email': ['', [Validators.required, Validators.email]],
       'password': ['', [Validators.required]],
     });
   }
   get f() { return this.loginForm.controls; }
 
-  /* getError(control: any) {
+  getError(control: any) {
     switch (control) {
       case 'email':
-          return this.loginForm.get('email').hasError('pattern') ? 'enter valid email' :
+          return this.loginForm.get('email').hasError('email') ? 'enter valid email' :
             this.loginForm.get('email').hasError('required') ? 'enter a email' : '';
       case 'password':
         return this.loginForm.get('password').hasError('required') ? 'enter a password' : '';
 
     }
-  } */
+  }
   login(form:FormGroup) {
     if(form.valid){
       this.subscription.add(this.authSrv.getUser(form.value).subscribe((data: any) => {
@@ -89,16 +92,33 @@ export class LoginComponent implements OnInit {
             let params = {
               userId: data.userList.id
             }
-            debugger;
+            this.openDialog('User exists, proceed to confirm its you');
             this.router.navigate(['/verify'], {queryParams : params});
           }
-      })
+      },
+        (err) => {
+          if (err) {
+            this.openDialog('Something went wrong');          
+          }
+        })
     );
   }
   }
 
   goBack() {
     this.router.navigate(['/register']);
+  }
+
+  openDialog(message): void {
+    setTimeout(() => this.dialog.open(NotificationPopupComponent, {
+      width: '400px',
+      data: message,
+      panelClass: 'modalbox-purple'
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

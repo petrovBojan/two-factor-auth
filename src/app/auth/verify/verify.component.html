@@ -2,7 +2,7 @@
   <div class="card">
     <mat-card class="holder">
       <div class="form-signin" >
-
+        <h3 class="text-center">Click on the same 3 spots you set to Confirm Login</h3>
 
         <div class="viewport" >
           <div class="text-center">
@@ -21,7 +21,7 @@
               Back
           </button>
           <button type="submit" value="Login"
-            [class.disabled]="" (click)="login()" class="btn float-right btn-custom">
+            [disabled]="(!logo && (order < 3))" (click)="login()" class="btn float-right btn-custom">
             <mat-icon>login</mat-icon>Login
           </button>
         </div>

@@ -40,7 +40,6 @@ h1 {
   margin: .8rem auto;
 }
 .error {
-  background: rgba(248,49,49,.64);
   padding: 7px;
   border-radius: 3px;
   color: #fff;

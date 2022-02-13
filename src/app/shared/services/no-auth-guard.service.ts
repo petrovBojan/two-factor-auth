@@ -11,10 +11,10 @@ export class NoAuthGuard implements CanActivate {
   }
   canActivate(activatedRoute: ActivatedRouteSnapshot) {
     const token = this.authSrv.token;
-    if (!token ) {
+    if (token) {
       return true;
     } else {
-      this.router.navigate(['/home'])
+      this.router.navigate(['/register'])
       return false;
     }
   }

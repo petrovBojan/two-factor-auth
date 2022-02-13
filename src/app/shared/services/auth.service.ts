@@ -243,9 +243,6 @@ export class AuthService {
     }
     return false;
   }
-  closeQuickStart(){
-    // return null;
-  }
 
 
   uploadImage(formData: FormData, userId): Observable<any> {
@@ -254,41 +251,6 @@ export class AuthService {
       .set('userID', encodeURIComponent(userId));
 
     return this.http.post<any>(endpoint, formData, { params: queryParams });
-  }
-
-/*   getTopicsForAutocomplete(topicValue: string): Observable<string[]> {
-    const queryParams = new HttpParams()
-      .set('topicValue', encodeURIComponent(topicValue));
-    const endpoint = `${this.baseUrl}/admin/${this.getVendorID()}/topics/autocomplete`;
-    return this.http.get<string[]>(endpoint, { params: queryParams });
-  } */
-
-
- /*  getMethod() {
-    return this.http.get(`${this.baseUrl}/InsertUser`, {
-      name: 'bojan',
-      email: 'taj@toj.com',
-      password: '1234'
-      
-    }).pipe(
-      tap((data: any) => {
-        return data;
-      })
-    );
-  } */
-
-  insertUser2() {
-    return this.http.get(`${this.baseUrl}/InsertUser`, {
-      params: {
-        name: 'bojan',
-        email: 'taj@toj.com',
-        password: '1234'
-      }
-    }).pipe(
-      tap((data: any) =>{
-        data;
-        })
-    );
   }
 
   insertUser(form): Observable<any> {
@@ -354,7 +316,17 @@ export class AuthService {
       imageID
     });
     const options = { headers: headers };
-    return this.http.post<any>(endpoint, body, options);
+    return this.http.post<any>(endpoint, body, options).pipe(
+      map((data: any) => {
+         if(data){
+          localStorage.setItem('user', JSON.stringify(data));
+          localStorage.setItem('jwt', data.status);
+        }
+        return data;
+        })
+      );;
 
   }
+
+  
 }

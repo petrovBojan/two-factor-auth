@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NotificationPopupComponent } from 'src/app/notification-popup/notification-popup.component';
 
 export interface Point {
   order: number,
@@ -39,7 +40,7 @@ export class VerifyComponent implements OnInit {
   maxPoints = false;
 
 
-  bgUrl = '../../../assets/images/pixel.png';
+  bgUrl;
   room;
   canvasSize = {
     width: (400) * devicePixelRatio,
@@ -67,8 +68,10 @@ export class VerifyComponent implements OnInit {
 
   ngOnInit() {
 
+    localStorage.removeItem('user');
+    localStorage.removeItem('jwt');
+    
     this.userId = this.route.snapshot.queryParams.userId;
-    debugger;
     this.subscription.add(this.authSrv.getUserImage(this.userId).subscribe((data: any) => {
       data;
       this.bgUrl = data.url;
@@ -85,9 +88,8 @@ export class VerifyComponent implements OnInit {
   onMouseDown(event) {
     event;
     if (this.order < 3) {
-      this.order = this.order +1;
       this.points.push({
-        order: this.order,
+        order: this.order++,
         x: event.layerX,
         y: event.layerY
   
@@ -97,8 +99,11 @@ export class VerifyComponent implements OnInit {
     console.log(this.order);
     console.log('-----------');
     } else {
-      this.maxPoints = true;
+      
       console.log('-----------');
+    }
+    if (this.order === 3) {
+      this.maxPoints = true;
     }
     
   }
@@ -108,9 +113,20 @@ export class VerifyComponent implements OnInit {
       this.subscription.add(this.authSrv.loginFinally(this.points, this.userId, this.imageId).subscribe((data: any) => {
         data;
         if (data.status) {
+          this.openDialog(data.msg);
           this.router.navigate(['/home'],);
+        } else {
+          this.openDialog(data.msg);
+          this.maxPoints = false;
+          this.order = 0;
+          this.points = [];
         }
 
+    },
+    (err) => {
+      if (err) {
+        this.openDialog('Something went wrong');
+      }
     })
   );
     }
@@ -121,5 +137,16 @@ export class VerifyComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  openDialog(message): void {
+    setTimeout(() => this.dialog.open(NotificationPopupComponent, {
+      width: '400px',
+      data: message,
+      panelClass: 'modalbox-purple'
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
 }

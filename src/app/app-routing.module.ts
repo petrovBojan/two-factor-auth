@@ -5,10 +5,11 @@ import { RegisterComponent } from './auth/register/register.component';
 import { UploadImageComponent } from './auth/upload-image/upload-image.component';
 import { VerifyComponent } from './auth/verify/verify.component';
 import { HomeComponent } from './home/home.component';
+import { NoAuthGuard } from './shared/services/no-auth-guard.service';
 
 const routes: Routes = [
 
-  { path: 'home', component: HomeComponent },
+  { path: 'home', canActivate: [NoAuthGuard], component: HomeComponent },
   { path: 'login', /* canActivate: [NoAuthGuard], */ component: LoginComponent },
   { path: 'register', /* canActivate: [NoAuthGuard], */ component: RegisterComponent },
   { path: 'verify', /* canActivate: [NoAuthGuard], */ component: VerifyComponent },

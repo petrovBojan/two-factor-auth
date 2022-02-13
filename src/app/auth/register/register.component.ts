@@ -4,10 +4,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { NotificationPopupComponent } from 'src/app/notification-popup/notification-popup.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { EventModel } from 'src/app/shared/utils/event.model';
 import { ImageUtils } from 'src/app/shared/utils/image.utils';
-import { WorldMap } from './world-map';
 
 @Component({
   selector: 'app-register',
@@ -23,13 +23,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   isEmailValid = true;
   registerForm: FormGroup;
   imgUrl = '';
-
-  public logoErrorMessage: string = '';
-  public logo: File = null;
-  public logoName: string = '';
-  public logoPath: string = '';
-  @ViewChild('logoImg') logoImg: ElementRef;
-  @ViewChild('logoInput') logoInput;
 
   mouseCoords = {
     x: 0,
@@ -65,7 +58,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
      private fb: FormBuilder) { }
 
   ngOnInit() {
-
+    localStorage.removeItem('user');
+    localStorage.removeItem('jwt');
     this.imgUrl='../../../assets/images/background.png';
     //this.errMsg = this.authSrv.getErrorMsg();
     // get return url from route parameters or defau lt to  '/'
@@ -86,52 +80,17 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
   get f() { return this.registerForm.controls; }
 
-  /* getError(control: any) {
+  getError(control: any) {
     switch (control) {
+      case 'name':
+        return this.registerForm.get('name').hasError('required') ? 'Enter a name' : '';
       case 'email':
-          return this.registerForm.get('email').hasError('pattern') ? 'enter valid email' :
-            this.registerForm.get('email').hasError('required') ? 'enter a email' : '';
+          return this.registerForm.get('email').hasError('email') ? 'Enter valid email' :
+            this.registerForm.get('email').hasError('required') ? 'Enter a email' : '';
       case 'password':
-        return this.registerForm.get('password').hasError('required') ? 'enter a password' : '';
+        return this.registerForm.get('password').hasError('required') ? 'Enter a password' : '';
 
     }
-  } */
-
-  onUploadLogoClick(): void {
-    this.logoInput.nativeElement.click();
-  }
- 
-  onLogoSelect(event): void {
-    this.logoErrorMessage = '';
-    const files = event.target.files;
-    if (files.length == 0) {
-      return;
-    }
-    const file = files[0];
-    if (!ImageUtils.isOfTypeImage(file.type) || !ImageUtils.hasValidExtension(file.name)) {
-      this.logoErrorMessage = 'Invalid image type';
-      return;
-    }
-
-    let maxSize = ImageUtils.maxEventLogoSize;
-    if (file.size > maxSize) {
-      let sizeDiff = ImageUtils.convertBytesToMB(file.size - maxSize);
-      sizeDiff = +Number.parseFloat(sizeDiff.toString()).toFixed(2);
-      maxSize = ImageUtils.convertBytesToMB(maxSize);
-      this.logoErrorMessage = `Image size cannot exceed ${maxSize} MB`;
-      return;
-    }
-
-    this.logo = file;
-    this.logoName = ImageUtils.truncate(file.name, 36);
-    ImageUtils.displayUploadedImage(file, this.logoImg);
-  }
-  
-  onMouseDown(event) {
-    event;
-    console.log(event.layerX);
-    console.log(event.layerY);
-    console.log('-----------');
   }
 
   login(form:FormGroup) {
@@ -141,9 +100,33 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           let params = {
             userId: data.id
           }
+          this.openDialog('registration is succesful');
           this.router.navigate(['/upload'], {queryParams : params});
-      })
+      },
+      (err) => {
+        if (err) {
+          this.openDialog('Something went wrong');
+        }
+      }
+      )
     );
   }
   }
+
+  goBack() {
+    this.router.navigate(['/login']);
+  }
+
+  openDialog(message): void {
+    setTimeout(() => this.dialog.open(NotificationPopupComponent, {
+      width: '400px',
+      data: message,
+      panelClass: 'modalbox-purple'
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+  
 }

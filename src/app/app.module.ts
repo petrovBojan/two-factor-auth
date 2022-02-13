@@ -36,6 +36,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { UploadImageComponent } from './auth/upload-image/upload-image.component';
 import { SafeurlPipe } from './shared/utils/safeurl.pipe';
+import { NotificationPopupComponent } from './notification-popup/notification-popup.component';
 
 export function jwtTokenGetter() {
   return localStorage.getItem("jwt");
@@ -49,7 +50,8 @@ export function jwtTokenGetter() {
     HomeComponent,
     VerifyComponent,
     UploadImageComponent,
-    SafeurlPipe
+    SafeurlPipe,
+    NotificationPopupComponent
   ],
   imports: [
     BrowserModule,

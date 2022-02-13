@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 import { ImageUtils } from 'src/app/shared/utils/image.utils';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { NotificationPopupComponent } from 'src/app/notification-popup/notification-popup.component';
 
 export interface Point {
   order: number,
@@ -57,7 +58,8 @@ export class UploadImageComponent implements OnInit {
   constructor(private authSrv: AuthService,private location: Location,  private router: Router, private dialog: MatDialog, private route: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit() {
-
+    localStorage.removeItem('user');
+    localStorage.removeItem('jwt');
     this.userId = this.route.snapshot.queryParams.userId;
   }
 
@@ -95,8 +97,13 @@ export class UploadImageComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.logo, this.logo.name);
     this.subscription.add(this.authSrv.uploadImage(formData, this.userId).subscribe((data: any) => {
-      data;
-      this.imageID = data.imu.imageID;
+      if (data) {
+        this.imageID = data.imu.imageID;
+        this.maxPoints = false;
+            this.order = 0;
+            this.points = [];
+      }
+      
   }))
 
   }
@@ -104,9 +111,8 @@ export class UploadImageComponent implements OnInit {
   onMouseDown(event) {
     event;
     if (this.order < 3 && this.logo) {
-      this.order = this.order +1;
       this.points.push({
-        order: this.order,
+        order: this.order++,
         x: event.layerX,
         y: event.layerY
   
@@ -116,22 +122,31 @@ export class UploadImageComponent implements OnInit {
     console.log(this.order);
     console.log('-----------');
     } else {
-      this.maxPoints = true;
+      
       console.log('-----------');
+    }
+    if (this.order === 3) {
+      this.maxPoints = true;
     }
     
   }
 
   register() {
-    debugger;
     if(this.maxPoints){
       this.subscription.add(this.authSrv.savePoints(this.points, this.userId, this.imageID).subscribe((data: any) => {
         data;
         if (data.userList) {
+
+          this.openDialog('two factor autentication is set!');
           this.router.navigate(['/login'],);
         }
-
-    })
+    },
+    (err) => {
+      if (err) {
+        this.openDialog('Something went wrong');
+      }
+    }
+    )
   );
     }
     
@@ -142,4 +157,15 @@ export class UploadImageComponent implements OnInit {
     this.location.back();
   }
 
+  openDialog(message): void {
+    setTimeout(() => this.dialog.open(NotificationPopupComponent, {
+      width: '400px',
+      data: message,
+      panelClass: 'modalbox-purple'
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

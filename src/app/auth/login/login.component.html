@@ -15,9 +15,9 @@
                     autofocus autocomplete="off"
               />
             </div>
-            <!-- <mat-error *ngIf="f.email.invalid && f.email.touched" class="ml-1 error">
+            <mat-error *ngIf="f.email.invalid && f.email.touched" class="ml-1 error">
               {{ getError('email') }}
-            </mat-error> -->
+            </mat-error>
           </div>
           <div class="form-group mb-2">
             <div class="input-group">
@@ -35,15 +35,15 @@
                   </button>
                 </div>
             </div>
-            <!-- <mat-error *ngIf="f.password.invalid && f.password.touched" class="ml-1 error">
+            <mat-error *ngIf="f.password.invalid && f.password.touched" class="ml-1 error">
               {{ getError('password') }}
-            </mat-error> -->
+            </mat-error>
           </div>
 
           <div class="d-flex h-100 justify-content-between ">
-            <button (click)="goBack()"
-            [class.disabled]="" class="btn float-right">
-              Back
+            <button type="button" (click)="goBack()"
+            [class.disabled]="" class="btn float-right btn-custom">
+              Register
             </button>
             <button type="submit" value="Login"
               [class.disabled]="" class="btn float-right btn-custom">
