@@ -1,4 +1,4 @@
-import { Validators, FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 export class EventModel {
     email: string;

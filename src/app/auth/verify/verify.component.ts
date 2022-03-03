@@ -36,7 +36,7 @@ export class VerifyComponent implements OnInit {
   }
 
   points: Point[] = [];
-  order = 0;
+  order = 1;
   maxPoints = false;
 
 
@@ -56,7 +56,7 @@ export class VerifyComponent implements OnInit {
   userId;
   imageId
   imageUrl;
-  staticUrl = 'http://127.0.0.1:8887/'
+  staticUrl = 'IPAddress' //for save load images
 
   constructor(private authSrv: AuthService, 
     private location: Location,  
@@ -87,7 +87,7 @@ export class VerifyComponent implements OnInit {
   }
   onMouseDown(event) {
     event;
-    if (this.order < 3) {
+    if (this.order < 4) {
       this.points.push({
         order: this.order++,
         x: event.layerX,
@@ -102,7 +102,7 @@ export class VerifyComponent implements OnInit {
       
       console.log('-----------');
     }
-    if (this.order === 3) {
+    if (this.order === 4) {
       this.maxPoints = true;
     }
     
@@ -118,7 +118,7 @@ export class VerifyComponent implements OnInit {
         } else {
           this.openDialog(data.msg);
           this.maxPoints = false;
-          this.order = 0;
+          this.order = 1;
           this.points = [];
         }
 

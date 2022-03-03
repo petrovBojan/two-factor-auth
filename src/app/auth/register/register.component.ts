@@ -6,8 +6,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NotificationPopupComponent } from 'src/app/notification-popup/notification-popup.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { EventModel } from 'src/app/shared/utils/event.model';
-import { ImageUtils } from 'src/app/shared/utils/image.utils';
 
 @Component({
   selector: 'app-register',
